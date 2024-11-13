@@ -9,8 +9,8 @@ function App() {
 	};
 
 	return (
-		<div className="w-full h-screen relative">
-			<APIProvider apiKey={process.env.GOOGLE_MAP_API_KEY}>
+		<div className=" h-full relative">
+			<APIProvider apiKey={process.env.GOOGLE_MAP_API_KEY!}>
 				<div className="w-full h-full">
 					<Map
 						defaultZoom={9}
