@@ -10,18 +10,18 @@ export type RouteConfig = {
 
 export const routerMap: RouteConfig[] = [
   {
-    name: '關 於 我',
+    name: '捐 血 須 知',
     path: '/',
-    component: React.lazy(() => import('../component/About/index'))
+    component: React.lazy(() => import('../pages/About/index'))
   },
   {
     name: '捐 血 地 圖',
     path: '/map',
-    component: React.lazy(() => import('../component/Map/index'))
+    component: React.lazy(() => import('../pages/Map/index'))
   },
   {
     name: '捐 血 紀 錄',
     path: '/record',
-    component: React.lazy(() => import('../component/Records/index'))
+    component: React.lazy(() => import('../pages/Records/index'))
   },
 ]

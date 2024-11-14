@@ -13,7 +13,7 @@ type ApiResponse<T> = {
 }
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export async function getApi<T>(params: ApiParams<T>): Promise<AxiosResponse> {
@@ -25,8 +25,8 @@ export async function getApi<T>(params: ApiParams<T>): Promise<AxiosResponse> {
     }
     return result
   }, null)
-
-  const response = await axiosInstance.get(apiPath + urlParam);
+  const url = urlParam ? apiPath + urlParam : apiPath
+  const response = await axiosInstance.get(url);
 
   return response;
 }

@@ -2,13 +2,22 @@ import { defineConfig, loadEnv } from 'vite'
 import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
+  const { VITE_PRODUCT_API_URL, VITE_API_URL } = env
+
   return {
+    server: {
+      proxy: {
+        [`${VITE_API_URL}`]: {
+          target: VITE_PRODUCT_API_URL,
+          changeOrigin: true,
+          rewrite: (path: string) => path.replace(VITE_API_URL, '')
+        },
+      },
+    },
     define: {
-      'process.env.GOOGLE_MAP_API_KEY': JSON.stringify(env.GOOGLE_MAP_API_KEY),
-      'process.env.GOOGLE_MAP_ID': JSON.stringify(env.GOOGLE_MAP_ID),
+      __VERSION__: JSON.stringify(process.env.npm_package_version),
     },
     plugins: [react()],
     resolve: {

@@ -10,12 +10,12 @@ function App() {
 
 	return (
 		<div className=" h-full relative">
-			<APIProvider apiKey={process.env.GOOGLE_MAP_API_KEY!}>
+			<APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY!}>
 				<div className="w-full h-full">
 					<Map
 						defaultZoom={9}
 						defaultCenter={position}
-						mapId={process.env.GOOGLE_MAP_ID}>
+						mapId={import.meta.env.VITE_GOOGLE_MAP_ID}>
 						<Location />
 					</Map>
 				</div>

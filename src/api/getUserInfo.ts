@@ -1,2 +1,0 @@
-// import { getApi } from "./fetch";
-

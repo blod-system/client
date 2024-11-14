@@ -5,7 +5,7 @@ import {
 	AdvancedMarker,
 	useMapsLibrary,
 } from '@vis.gl/react-google-maps';
-import { CompassFilled } from '@ant-design/icons';
+import { AimOutlined } from '@ant-design/icons';
 
 
 interface Position {
@@ -99,7 +99,7 @@ export default function Location() {
 			<button
 				className="w-8 h-8 rounded-full border-slate-700 absolute bottom-52 right-4 z-10 flex items-center justify-center cursor-pointer drop-shadow-2xl"
 				onClick={getPosition}>
-				<CompassFilled className='text-4xl text-slate-700 rounded-full hover:bg-white' />
+				<AimOutlined className='text-4xl text-slate-700 hover:scale-125' />
 			</button>
 			{markers &&
 				markers.map((marker, index) => (

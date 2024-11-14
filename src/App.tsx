@@ -1,21 +1,23 @@
 import { Suspense, useEffect } from 'react';
 import './index.css';
-import Header from './component/Header/index';
+import Header from './pages/Header/index';
 import {
   Routes,
   Route,
   Navigate,
 } from 'react-router-dom';
-import Menu from './component/Menu/index';
+import Menu from './pages/Menu/index';
 import { routerMap } from './routes/routerMap';
-import Footer from './component/Footer';
+import Footer from './pages/Footer';
 import { useUserStore } from './store/userStore';
 export default function App() {
   const user = useUserStore();
   const { getUserInfo } = user
+
   useEffect(() => {
     getUserInfo()
   }, [getUserInfo])
+
   return (
     <main className='h-dvh'>
       <Header />

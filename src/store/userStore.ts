@@ -21,15 +21,9 @@ type UserStore = {
 export const useUserStore = create<UserStore>((set) => ({
   userInfo: null,
   getUserInfo: async () => {
-    try {
-      const response = await getApi({ apiPath: '', })
-      if (response.data) {
-        set({ userInfo: response.data })
-      } else {
-        throw (response)
-      }
-    } catch (error) {
-      console.log(error)
+    const response = await getApi({ apiPath: '/user/userInfo', })
+    if (response.data) {
+      set({ userInfo: response.data })
     }
   },
   setUserInfo: (userInfo) => set({ userInfo }),
