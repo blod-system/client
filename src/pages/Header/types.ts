@@ -6,7 +6,9 @@ export type LoginParam = {
 export type SignUpParam = {
   account: string;
   password: string;
+  name: string;
   birthday: string;
   email: string;
-  phone: string | null;
+  phone: string;
+  gender: 'women' | 'men'
 }
