@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Radio } from 'antd'
+import { Button, Form, Input, Modal, Radio, DatePicker } from 'antd'
 import { SignUpParam } from '../../types'
 
 type PropsType = {
@@ -46,21 +46,11 @@ export default function SignUpModal({ isShow, onCancel, onConfirm }: PropsType) 
             <Input allowClear autoComplete='new-password' />
           </Form.Item>
           <Form.Item<SignUpParam>
-            label="email"
-            name="email"
-            rules={
-              [
-                {
-                  required: true,
-                  message: '不可空白'
-                },
-                {
-                  pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: "格式不符"
-                }
-              ]}
+            label='生日'
+            name="birthday"
+            rules={[{ required: true, message: '不可空白' }]}
           >
-            <Input allowClear autoComplete='new-password' />
+            <DatePicker placeholder='請選擇' />
           </Form.Item>
           <Form.Item<SignUpParam>
             label="手機"
@@ -82,6 +72,23 @@ export default function SignUpModal({ isShow, onCancel, onConfirm }: PropsType) 
               <Radio value="women">女</Radio>
               <Radio value="men">男</Radio>
             </Radio.Group>
+          </Form.Item>
+          <Form.Item<SignUpParam>
+            label="E-mail"
+            name="email"
+            rules={
+              [
+                {
+                  required: true,
+                  message: '不可空白'
+                },
+                {
+                  pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "格式不符"
+                }
+              ]}
+          >
+            <Input allowClear autoComplete='new-password' />
           </Form.Item>
           <div className='flex justify-evenly my-5'>
             <Button onClick={onCancel} color='default' variant='solid'>
