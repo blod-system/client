@@ -1,4 +1,4 @@
-import { GithubOutlined } from "@ant-design/icons";
+import { GithubOutlined, MailOutlined } from "@ant-design/icons";
 
 export default function Footer() {
   return (
@@ -8,7 +8,10 @@ export default function Footer() {
         <GithubOutlined className="text-3xl mr-2" />
         <span className="mt-1">GitHub</span>
       </a>
-      <p className="">Email： catmoon1017@gmail.com</p>
+      <p className="flex items-center">
+        <MailOutlined className="text-3xl mr-2" />
+        <span >catmoon1017@gmail.com</span>
+      </p>
     </div>
   )
 }
