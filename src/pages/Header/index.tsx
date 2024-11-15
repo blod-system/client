@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { UserOutlined, LogoutOutlined, LoginOutlined } from "@ant-design/icons";
+import { message } from 'antd'
 import { useUserStore } from "../../store/userStore";
+import { UserInfoModal } from "./component/UserInfoModal";
 import { LoginParam, SignUpParam, UpdateUserInfoParam } from "./types";
 import LoginModal from "./component/LoginModal";
 import SignUpModal from "./component/SignUpModal";
 import LogoutModal from "./component/LogoutModal";
-import { UserInfoModal } from "./component/UserInfoModal";
-import dayjs from "dayjs";
+
 export default function Header() {
 	const user = useUserStore();
+	const [messageBox, context] = message.useMessage();
 	const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
 	const [showSignUpModal, setShowSignUpModal] = useState<boolean>(false)
 	const [showLogout, setShowLogoutModal] = useState<boolean>(false)
@@ -32,12 +34,19 @@ export default function Header() {
 	function logout() {
 		setShowLogoutModal(false)
 	}
+
 	function updateUserInfo(value: UpdateUserInfoParam) {
-		console.log(dayjs(value.birthday).format('YYYY-MM-DD'))
+		console.log(value.birthday)
+		setShowUserInfoModal(false)
+		messageBox.open({
+			type: 'success',
+			content: 'This is a success message',
+		});
 	}
 
 	return (
 		<div className="max-h-14 min-h-11 bg-blue-950 px-10 flex justify-end items-center text-white text-lg">
+			{context}
 			<LoginModal
 				isShow={showLoginModal}
 				onCancel={() => setShowLoginModal(false)}
