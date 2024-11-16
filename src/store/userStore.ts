@@ -21,17 +21,7 @@ type UserStore = {
 }
 
 export const useUserStore = create<UserStore>((set) => ({
-  userInfo: {
-    uid: 1,
-    account: '123',
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    birthday: '1990-01-01',
-    phone: '0912345678',
-    gender: 'women',
-    reminderDate: '2022-01-01',
-    isReminder: 1,
-  },
+  userInfo: null,
   getUserInfo: async () => {
     const response = await getApi({ apiPath: '/user/userInfo', })
     if (response.data) {
