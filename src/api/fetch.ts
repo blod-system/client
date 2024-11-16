@@ -1,8 +1,10 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
-type ApiParams<T> = {
+type GetApiParams = {
   apiPath: string;
   restfulParams?: (string | number)[];
+}
+interface ApiParams<T> extends GetApiParams {
   data?: T
 }
 
@@ -16,7 +18,7 @@ const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-export async function getApi<T>(params: ApiParams<T>): Promise<AxiosResponse> {
+export async function getApi<T>(params: GetApiParams): Promise<AxiosResponse<ApiResponse<T>>> {
   const { apiPath, restfulParams } = params
   const urlParam = restfulParams?.reduce<null | string>((result, item) => {
     if (item) {
