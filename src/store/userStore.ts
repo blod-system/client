@@ -12,6 +12,7 @@ export type UserInfo = {
   reminderDate: string;
   isReminder: 0 | 1;
 }
+
 type UserStore = {
   userInfo: UserInfo | null;
   setUserInfo: (userInfo: UserInfo) => void;

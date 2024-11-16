@@ -17,7 +17,7 @@ export default function SignUpModal({ isShow, onCancel, onConfirm }: PropsType) 
       onCancel={onCancel}
       footer={null}
     >
-      <p className='text-center text-2xl font-bold'>註 冊</p>
+      <p className='text-center text-2xl font-bold mb-5'>註 冊</p>
       <div className='px-5 pt-5'>
         <Form
           onFinish={onConfirm}
