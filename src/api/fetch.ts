@@ -22,7 +22,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 export async function getApi<T>(params: GetApiParams): Promise<ApiResponse<T>> {
   const { apiPath, restfulParams } = params
-  const urlParam = restfulParams?.reduce<null | string>((result, item) => {
+  const urlParam = restfulParams?.reduce<null | string | number>((result, item) => {
     if (item) {
       result = result ? result : ''
       return result + '/' + item
@@ -30,6 +30,7 @@ export async function getApi<T>(params: GetApiParams): Promise<ApiResponse<T>> {
     return result
   }, null)
   const url = urlParam ? apiPath + urlParam : apiPath
+  console.log("url", url)
   const response = await axiosInstance.get(url);
 
   return response.data;

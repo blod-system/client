@@ -68,7 +68,7 @@ export default function UserInfo({ userInfo, onCancel, onEdit }: PropsType) {
           下 次 捐 血 日
         </p>
         <p className='w-36 md:w-60'>
-          {userInfo?.reminderDate}
+          {new Date(userInfo?.reminderDate).toLocaleDateString()}
         </p>
       </div>
       <div className='flex mb-3 items-center'>

@@ -8,11 +8,12 @@ type PropsType = {
 }
 
 export function RecordTable({ dataSource, openEditModal }: PropsType) {
-
+  console.log(dataSource)
   const columns: TableColumnsType<RecordData> = [
     {
       title: '捐 血 日 期',
       dataIndex: 'date',
+      render: (date) => new Date(date).toLocaleDateString(),
     },
     {
       title: '捐 血 量',
@@ -22,6 +23,11 @@ export function RecordTable({ dataSource, openEditModal }: PropsType) {
     {
       title: '捐 血 報 告',
       dataIndex: 'reportUrl',
+      render: (reportUrl) => (
+        reportUrl ? <a href={reportUrl} className="text-blue-500 hover:text-red-500" target="_blank" rel="noopener noreferrer">
+          PDF
+        </a> : <></>
+      )
     },
     {
       title: '操 作',

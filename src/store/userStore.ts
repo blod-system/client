@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { getApi } from '../api/fetch';
 
 export type UserInfo = {
-  uid: number;
+  id: number;
   account: string;
   name: string;
   email: string;
@@ -33,7 +33,7 @@ export const useUserStore = create<UserStore>((set) => ({
     if (response.data) {
       set({
         userInfo: {
-          uid: response.data?.uid,
+          id: response.data?.id,
           account: response.data?.account,
           name: response.data?.name,
           birthday: response.data?.birthday,

@@ -2,7 +2,7 @@
 import { Modal, Button, Form, DatePicker, Upload, Input, UploadFile } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import type { RecordData } from '../../types'
+import type { RecordData, RecordParams } from '../../types'
 
 
 type PropsType = {
@@ -10,20 +10,31 @@ type PropsType = {
   isShow: boolean;
   data: RecordData | null
   onCancel: () => void
-  onConfirm: (value: RecordData) => void
+  onConfirm: (value: RecordParams) => void
 }
 
 
 export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: PropsType) {
+  console.log(data)
+  const [form] = Form.useForm();
   const defaultFileList: UploadFile[] = [
     {
       uid: String(data?.uid),
       name: data?.reportUrl ? data.reportUrl.split('/pdf/')[2] : '',
       status: 'done',
       url: data?.reportUrl ?? '',
-      // url: 'https://pub-f98ae2284fcc475493d4204d4b2a3a0a.r2.dev/pdf/aabbcc.pdf',
     },
   ]
+
+  function onSubmit() {
+    const formData = form.getFieldsValue()
+    onConfirm(
+      {
+        ...formData,
+        ...data?.id && { id: data.id }
+      }
+    )
+  }
 
   return (
     <Modal
@@ -44,7 +55,8 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
               date: dayjs(data?.date)
             }
           } : undefined}
-          onFinish={onConfirm}
+          form={form}
+          // onFinish={onConfirm}
           labelCol={{ span: 5 }}
         >
           <Form.Item<RecordData>
@@ -85,7 +97,7 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
           <Form.Item>
             <div className=" flex justify-evenly">
               <Button color="primary" variant="solid" onClick={onCancel}>取消</Button>
-              <Button color="danger" variant="solid" htmlType="submit">
+              <Button color="danger" variant="solid" onClick={onSubmit}>
                 {modalType === 'create' ? '新增' : '保存'}
               </Button>
             </div>

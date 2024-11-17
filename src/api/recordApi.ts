@@ -10,6 +10,7 @@ export type RecordResponse = Omit<RecordData, 'volumeMl' | 'reportUrl'> & {
 type RecordPayload = Omit<RecordData, 'reportUrl' | 'volumeMl'> & {
   report_url: string | null;
   volume_ml: number;
+  user_account: string;
 }
 export async function getRecords(uid: number) {
   const response = await getApi<RecordResponse[]>(
@@ -24,7 +25,7 @@ export async function getRecords(uid: number) {
 export async function addRecord(params: RecordPayload) {
   const response = await postApi<RecordPayload, { message: string }>(
     {
-      apiPath: '/record',
+      apiPath: '/record/create',
       data: params
     }
   )
