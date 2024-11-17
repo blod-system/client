@@ -7,12 +7,16 @@ export type SignUpParam = {
   account: string;
   password: string;
   name: string;
-  birthday: string;
+  birthday: string | Date;
   email: string;
   phone: string;
   gender: 'women' | 'men'
 }
 
-export type UpdateUserInfoParam = Omit<SignUpParam, 'account' | 'password'> & {
-  isReminder: 0 | 1
+export type UpdateUserInfoData = Omit<SignUpParam, 'account' | 'password'> & {
+  isReminderActive: 0 | 1
+}
+
+export type UpdateUserInfoParams = Omit<UpdateUserInfoData, 'isReminderActive'> & {
+  is_reminder_active: 0 | 1
 }

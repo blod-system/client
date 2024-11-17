@@ -2,15 +2,15 @@
 import { Modal, Button, Form, DatePicker, Upload, Input, UploadFile } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import type { FormDataType } from '../../types'
+import type { RecordData } from '../../types'
 
 
 type PropsType = {
   modalType: 'edit' | 'create'
   isShow: boolean;
-  data: FormDataType | null
+  data: RecordData | null
   onCancel: () => void
-  onConfirm: (value: FormDataType) => void
+  onConfirm: (value: RecordData) => void
 }
 
 
@@ -24,7 +24,6 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
       // url: 'https://pub-f98ae2284fcc475493d4204d4b2a3a0a.r2.dev/pdf/aabbcc.pdf',
     },
   ]
-
 
   return (
     <Modal
@@ -48,14 +47,14 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
           onFinish={onConfirm}
           labelCol={{ span: 5 }}
         >
-          <Form.Item<FormDataType>
+          <Form.Item<RecordData>
             label='捐血日期'
             name='date'
             rules={[{ required: true, message: '不可空白' }]}
           >
             <DatePicker className="max-w-36 min-w-36" placeholder="請選擇捐血日期" />
           </Form.Item>
-          <Form.Item<FormDataType>
+          <Form.Item<RecordData>
             label='捐血量'
             name='volumeMl'
             rules={[
@@ -65,7 +64,7 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
           >
             <Input maxLength={3} suffix="cc" className="max-w-36 min-w-36" />
           </Form.Item>
-          <Form.Item<FormDataType>
+          <Form.Item<RecordData>
             label='捐血報告'
             name='reportUrl'
             valuePropName="file"

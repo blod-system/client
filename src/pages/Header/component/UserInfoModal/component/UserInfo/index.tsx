@@ -36,7 +36,7 @@ export default function UserInfo({ userInfo, onCancel, onEdit }: PropsType) {
           生 日
         </p>
         <p className='w-36 md:w-60'>
-          {userInfo?.birthday}
+          {new Date(userInfo?.birthday).toLocaleDateString()}
         </p>
       </div>
       <div className='flex mb-3 items-center'>
@@ -76,7 +76,7 @@ export default function UserInfo({ userInfo, onCancel, onEdit }: PropsType) {
           捐血提醒
         </p>
         <p className='w-36 md:w-60'>
-          {userInfo?.isReminder === 0 ? '否' : '是'}
+          {userInfo?.isReminderActive === 0 ? '否' : '是'}
         </p>
       </div>
 

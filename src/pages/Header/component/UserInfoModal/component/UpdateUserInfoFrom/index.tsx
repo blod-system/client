@@ -1,17 +1,15 @@
 import { Button, Form, Radio, Input, Switch, DatePicker } from 'antd'
 import dayjs from "dayjs";
-import { UpdateUserInfoParam } from '../../../../types';
+import { UpdateUserInfoData } from '../../../../types';
 
 type PropsType = {
-  userInfo: UpdateUserInfoParam;
-  onSubmit: (value: UpdateUserInfoParam) => void
+  userInfo: UpdateUserInfoData;
+  onSubmit: (value: UpdateUserInfoData) => void
   onCancel: () => void;
 }
 
 export default function UpdateUserInfoFrom({ userInfo, onSubmit, onCancel }: PropsType) {
-
-  function handelSubmitValueFormat(value: UpdateUserInfoParam) {
-    value.birthday = dayjs(value.birthday).format('YYYY-MM-DD')
+  function handelSubmitValueFormat(value: UpdateUserInfoData) {
     onSubmit(value)
   }
 
@@ -20,25 +18,25 @@ export default function UpdateUserInfoFrom({ userInfo, onSubmit, onCancel }: Pro
       onFinish={handelSubmitValueFormat}
       initialValues={{
         ...userInfo,
-        birthday: dayjs(userInfo?.birthday ?? new Date().toLocaleDateString())
+        birthday: dayjs(userInfo?.birthday)
       }}
       labelCol={{ span: 5 }}
     >
-      <Form.Item<UpdateUserInfoParam>
+      <Form.Item<UpdateUserInfoData>
         label="暱稱"
         name="name"
         rules={[{ required: true, message: '不可空白' }]}
       >
         <Input allowClear autoComplete='new-password' />
       </Form.Item>
-      <Form.Item<UpdateUserInfoParam>
+      <Form.Item<UpdateUserInfoData>
         label='生日'
         name="birthday"
         rules={[{ required: true, message: '不可空白' }]}
       >
         <DatePicker placeholder='請選擇' format='YYYY/MM/DD' />
       </Form.Item>
-      <Form.Item<UpdateUserInfoParam>
+      <Form.Item<UpdateUserInfoData>
         label="手機"
         name="phone"
         rules={
@@ -50,7 +48,7 @@ export default function UpdateUserInfoFrom({ userInfo, onSubmit, onCancel }: Pro
       >
         <Input allowClear autoComplete='new-password' max={10} />
       </Form.Item>
-      <Form.Item<UpdateUserInfoParam>
+      <Form.Item<UpdateUserInfoData>
         label="性別"
         name={'gender'}
       >
@@ -59,7 +57,7 @@ export default function UpdateUserInfoFrom({ userInfo, onSubmit, onCancel }: Pro
           <Radio value="men">男</Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item<UpdateUserInfoParam>
+      <Form.Item<UpdateUserInfoData>
         label="E-mail"
         name="email"
         rules={
@@ -76,9 +74,10 @@ export default function UpdateUserInfoFrom({ userInfo, onSubmit, onCancel }: Pro
       >
         <Input allowClear autoComplete='new-password' />
       </Form.Item>
-      <Form.Item<UpdateUserInfoParam>
+      <Form.Item<UpdateUserInfoData>
         label='捐血提醒'
-        name='isReminder'
+        name='isReminderActive'
+        valuePropName="checked"
       >
         <Switch />
       </Form.Item>

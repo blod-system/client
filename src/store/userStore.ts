@@ -10,7 +10,12 @@ export type UserInfo = {
   phone: string | null;
   gender: 'women' | 'men';
   reminderDate: string;
-  isReminder: 0 | 1;
+  isReminderActive: 0 | 1;
+}
+
+export type UserInfoResponse = Omit<UserInfo, 'isReminderActive' | 'reminderDate'> & {
+  is_reminder_active: 0 | 1;
+  reminder_date: string;
 }
 
 type UserStore = {
@@ -24,10 +29,21 @@ type UserStore = {
 export const useUserStore = create<UserStore>((set) => ({
   userInfo: null,
   getUserInfo: async () => {
-    const response = await getApi<UserInfo>({ apiPath: '/user/userInfo', })
-    const { data } = response
-    if (data) {
-      set({ userInfo: data.data })
+    const response = await getApi<UserInfoResponse>({ apiPath: '/user/userInfo', })
+    if (response.data) {
+      set({
+        userInfo: {
+          uid: response.data?.uid,
+          account: response.data?.account,
+          name: response.data?.name,
+          birthday: response.data?.birthday,
+          email: response.data?.email,
+          gender: response.data?.gender === 'women' ? 'women' : 'men',
+          phone: response.data?.phone,
+          isReminderActive: response.data.is_reminder_active,
+          reminderDate: response.data.reminder_date
+        }
+      })
     }
   },
   setUserInfo: (userInfo) => set({ userInfo }),

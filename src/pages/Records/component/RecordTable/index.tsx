@@ -1,15 +1,15 @@
 import { Button, ConfigProvider, Table } from "antd";
 import type { TableColumnsType } from "antd"
-import type { DataType } from '../../types'
+import type { RecordData } from '../../types'
 
 type PropsType = {
-  dataSource: DataType[];
-  openEditModal: (value: DataType) => void;
+  dataSource: RecordData[] | null;
+  openEditModal: (value: RecordData) => void;
 }
 
 export function RecordTable({ dataSource, openEditModal }: PropsType) {
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<RecordData> = [
     {
       title: '捐 血 日 期',
       dataIndex: 'date',
@@ -27,7 +27,7 @@ export function RecordTable({ dataSource, openEditModal }: PropsType) {
       title: '操 作',
       dataIndex: 'operation',
       width: 100,
-      render: (_, record: DataType) => (
+      render: (_, record: RecordData) => (
         <Button
           variant="link"
           color="primary"
@@ -54,7 +54,7 @@ export function RecordTable({ dataSource, openEditModal }: PropsType) {
       <Table
         className="bg-gray-500"
         columns={columns}
-        dataSource={dataSource}
+        dataSource={dataSource || []}
         bordered
         pagination={false}
         scroll={{ y: 100 * 5 }}

@@ -1,24 +1,26 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance } from "axios";
 
 type GetApiParams = {
   apiPath: string;
   restfulParams?: (string | number)[];
 }
-interface ApiParams<T> extends GetApiParams {
+type ApiParams<T> = {
+  apiPath: string;
+  restfulParams?: (string | number)[];
   data?: T
 }
 
 type ApiResponse<T> = {
   status: number;
-  message?: string;
-  data?: T
+  message: string;
+  data: T
 }
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-export async function getApi<T>(params: GetApiParams): Promise<AxiosResponse<ApiResponse<T>>> {
+export async function getApi<T>(params: GetApiParams): Promise<ApiResponse<T>> {
   const { apiPath, restfulParams } = params
   const urlParam = restfulParams?.reduce<null | string>((result, item) => {
     if (item) {
@@ -30,19 +32,19 @@ export async function getApi<T>(params: GetApiParams): Promise<AxiosResponse<Api
   const url = urlParam ? apiPath + urlParam : apiPath
   const response = await axiosInstance.get(url);
 
-  return response;
+  return response.data;
 }
 
-export async function postApi<T, R>(params: ApiParams<T>): Promise<AxiosResponse<ApiResponse<R>>> {
+export async function postApi<T, R>(params: ApiParams<T>): Promise<ApiResponse<R>> {
   const { apiPath, data } = params
   const response = await axiosInstance.post(apiPath, data);
 
-  return response;
+  return response.data;
 }
 
-export async function putApi<T, R>(params: ApiParams<T>): Promise<ApiResponse<ApiResponse<R>>> {
+export async function putApi<T, R>(params: ApiParams<T>): Promise<ApiResponse<R>> {
   const { apiPath, data } = params
   const response = await axiosInstance.put(apiPath, data);
 
-  return response;
+  return response.data;
 }

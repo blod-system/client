@@ -1,41 +1,38 @@
 import { getApi, postApi, putApi } from "./fetch";
-import type { LoginParam, UpdateUserInfoParam } from "../pages/Header/types";
+import type { LoginParam, SignUpParam, UpdateUserInfoParams } from "../pages/Header/types";
+import { UserInfo } from "../store/userStore";
 
-type Payload = {
-  status: number;
-  data?: object[];
-  message?: string
-}
+
 export async function login(params: LoginParam) {
   const apiParams = {
     apiPath: '/user/login',
     data: params
   }
 
-  const response = await postApi<LoginParam, Payload>(apiParams)
+  const response = await postApi<LoginParam, { message: string }>(apiParams)
   return response
 }
 
 export async function logout() {
-  const response = await getApi<Payload>({ apiPath: '/user/logout' })
+  const response = await getApi<{ message: string }>({ apiPath: '/user/logout' })
   return response
 }
 
-export async function singUp(params: UpdateUserInfoParam) {
+export async function singUp(params: SignUpParam) {
   const apiParams = {
     apiPath: '/user/register',
     data: params
   }
-  const response = await postApi<UpdateUserInfoParam, Payload>(apiParams)
+  const response = await postApi<SignUpParam, { message: string }>(apiParams)
   return response
 }
 
-export async function updateUserInfo(params: UpdateUserInfoParam) {
+export async function updateUserInfo(params: UpdateUserInfoParams) {
   const putParams = {
     apiPath: '/user/update',
     data: params
   }
-  const response = await putApi<UpdateUserInfoParam, Payload>(putParams)
+  const response = await putApi<UpdateUserInfoParams, UserInfo>(putParams)
 
   return response
 }

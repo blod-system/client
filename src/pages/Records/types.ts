@@ -1,9 +1,7 @@
-export type DataType = {
-  id: number;
+export type RecordData = {
+  id?: number;
   uid: number;
-  date: string;
+  date: string | Date;
   volumeMl: number;
   reportUrl: string | null
 }
-
-export type FormDataType = Omit<DataType, 'id'> & Partial<Pick<DataType, 'uid' | 'date' | 'volumeMl'>>

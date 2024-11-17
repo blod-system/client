@@ -3,7 +3,8 @@ import { UserOutlined, LogoutOutlined, LoginOutlined } from "@ant-design/icons";
 import { message } from 'antd'
 import { useUserStore } from "../../store/userStore";
 import { UserInfoModal } from "./component/UserInfoModal";
-import { LoginParam, SignUpParam, UpdateUserInfoParam } from "./types";
+import { LoginParam, SignUpParam, UpdateUserInfoData, UpdateUserInfoParams } from "./types";
+import { login, singUp, logout, updateUserInfo } from '../../api/userApi'
 import LoginModal from "./component/LoginModal";
 import SignUpModal from "./component/SignUpModal";
 import LogoutModal from "./component/LogoutModal";
@@ -21,27 +22,80 @@ export default function Header() {
 		setShowSignUpModal(true)
 	}
 
-	function login(value: LoginParam) {
-		console.log(value)
-		setShowLoginModal(false)
+	async function handelLogin(value: LoginParam) {
+		const loginRes = await login(value)
+		if (loginRes?.status === 200) {
+			await user.getUserInfo()
+			messageBox.open({
+				type: 'success',
+				content: loginRes.message,
+			});
+			setShowLoginModal(false)
+		} else {
+			messageBox.open({
+				type: 'error',
+				content: loginRes.message,
+			});
+		}
 	}
 
-	function signUp(value: SignUpParam) {
-		console.log(value)
-		setShowSignUpModal(false)
+	async function handelSignUp(value: SignUpParam) {
+		const signUpRes = await singUp({ ...value, birthday: new Date(value.birthday) })
+
+		if (signUpRes.status === 200) {
+			messageBox.open({
+				type: 'success',
+				content: signUpRes.message
+			})
+			setShowSignUpModal(false)
+		} else {
+			messageBox.open({
+				type: 'error',
+				content: signUpRes.message,
+			});
+		}
 	}
 
-	function logout() {
-		setShowLogoutModal(false)
+	async function handelLogout() {
+		const logoutRes = await logout()
+		if (logoutRes.status === 200) {
+			messageBox.open({
+				type: 'success',
+				content: logoutRes.message,
+			})
+			user.clearUserInfo()
+			setShowLogoutModal(false)
+		} else {
+			messageBox.open({
+				type: 'error',
+				content: logoutRes?.message
+			});
+		}
 	}
 
-	function updateUserInfo(value: UpdateUserInfoParam) {
-		console.log(value.birthday)
-		setShowUserInfoModal(false)
-		messageBox.open({
-			type: 'success',
-			content: 'This is a success message',
-		});
+	async function handelUpdateUserInfo(value: UpdateUserInfoData, callBack: () => void) {
+		const params: UpdateUserInfoParams = {
+			name: value.name,
+			birthday: new Date(value.birthday),
+			email: value.email,
+			phone: value.phone,
+			gender: value.gender,
+			is_reminder_active: value.isReminderActive,
+		}
+
+		const updateRes = await updateUserInfo(params)
+		if (updateRes?.status === 200) {
+			messageBox.open({
+				type: 'success',
+				content: updateRes.message,
+			});
+			callBack()
+		} else {
+			messageBox.open({
+				type: 'error',
+				content: updateRes.message,
+			});
+		}
 	}
 
 	return (
@@ -50,22 +104,22 @@ export default function Header() {
 			<LoginModal
 				isShow={showLoginModal}
 				onCancel={() => setShowLoginModal(false)}
-				onConfirm={login}
+				onConfirm={handelLogin}
 				onOpenSignUp={toggleLoginModalToSignUpModal}
 			/>
 			<SignUpModal
 				isShow={showSignUpModal}
 				onCancel={() => setShowSignUpModal(false)}
-				onConfirm={signUp} />
+				onConfirm={handelSignUp} />
 			<LogoutModal
 				isShow={showLogout}
 				onCancel={() => setShowLogoutModal(false)}
-				onConfirm={logout}
+				onConfirm={handelLogout}
 			/>
 			<UserInfoModal
 				isShow={showUserInfoModal}
 				onCancel={() => setShowUserInfoModal(false)}
-				onConfirm={(updateUserInfo)}
+				onConfirm={(handelUpdateUserInfo)}
 			/>
 			{user.userInfo ?
 				<>
