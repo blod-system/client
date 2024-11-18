@@ -18,7 +18,10 @@ type ApiResponse<T> = {
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export async function getApi<T>(params: GetApiParams): Promise<ApiResponse<T>> {
@@ -31,7 +34,6 @@ export async function getApi<T>(params: GetApiParams): Promise<ApiResponse<T>> {
     return result
   }, null)
   const url = urlParam ? apiPath + urlParam : apiPath
-  console.log("url", url)
   const response = await axiosInstance.get(url);
 
   return response.data;
