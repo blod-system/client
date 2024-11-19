@@ -1,33 +1,30 @@
 import { useCallback, useEffect, useState } from 'react'
 import { RecordTable } from "./component/RecordTable";
-// import { RecordModal } from './component/RecordModal';
+import { RecordModal } from './component/RecordModal';
 import { PlusOutlined } from '@ant-design/icons';
 import { useUserStore } from '../../store/userStore';
-import { getRecords } from '../../api/recordApi';
-// import { addRecord, getRecords, updateRecord } from '../../api/recordApi';
-// import { message } from 'antd';
-import type { RecordData } from './types'
-// import type { RecordData, RecordParams } from './types'
+import { addRecord, getRecords, updateRecord } from '../../api/recordApi';
+import { message } from 'antd';
+import type { RecordData, RecordParams } from './types'
 
 export default function Records() {
-  // const [showModal, setShowModal] = useState<boolean>(false)
-  // const [modalType, setModalType] = useState<'create' | 'edit'>('create')
-  // const [modalData, setModalData] = useState<RecordData | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [modalType, setModalType] = useState<'create' | 'edit'>('create')
+  const [modalData, setModalData] = useState<RecordData | null>(null);
   const [dataSource, setDataSource] = useState<RecordData[] | null>(null)
-  // const [messageBox, content] = message.useMessage()
+  const [messageBox, content] = message.useMessage()
   const user = useUserStore(i => i.userInfo);
 
   function openCreateModal() {
-    // setModalType('create')
-    // setModalData(null)
-    // setShowModal(true)
+    setModalType('create')
+    setModalData(null)
+    setShowModal(true)
   }
 
   function openEditModal(value: RecordData) {
-    console.log(value)
-    // setModalType('edit')
-    // setModalData({ ...value })
-    // setShowModal(true)
+    setModalType('edit')
+    setModalData({ ...value })
+    setShowModal(true)
   }
 
   const handelGetRecordTable = useCallback(async () => {
@@ -48,35 +45,33 @@ export default function Records() {
     }
   }, [user])
 
-  // async function handelSubmitRecord(value: RecordParams) {
-  //   if (user) {
-  //     const params = {
-  //       uid: value.uid ?? user?.id,
-  //       user_account: user?.account,
-  //       date: new Date(value.date),
-  //       volume_ml: Number(value.volumeMl),
-  //       report_url: value?.reportUrl?.file?.response?.data.url ?? null,
-  //       ...(value.id && { id: value.id })
-  //     }
-  //     console.log(params)
-  //     console.log("user", user)
-  //     const response = modalType === 'create' ? await addRecord(params) : await updateRecord(params)
+  async function handelSubmitRecord(value: RecordParams) {
+    if (user) {
+      const params = {
+        uid: value.uid ?? user?.id,
+        user_account: user?.account,
+        date: new Date(value.date),
+        volume_ml: Number(value.volumeMl),
+        report_url: value?.reportUrl?.file?.response?.data.url ?? null,
+        ...(value.id && { id: value.id })
+      }
+      const response = modalType === 'create' ? await addRecord(params) : await updateRecord(params)
 
-  //     if (response.status === 200) {
-  //       messageBox.open({
-  //         type: 'success',
-  //         content: response.message
-  //       })
-  //       await handelGetRecordTable()
-  //       setShowModal(false)
-  //     } else {
-  //       messageBox.open({
-  //         type: 'error',
-  //         content: response.message
-  //       })
-  //     }
-  //   }
-  // }
+      if (response.status === 200) {
+        messageBox.open({
+          type: 'success',
+          content: response.message
+        })
+        await handelGetRecordTable()
+        setShowModal(false)
+      } else {
+        messageBox.open({
+          type: 'error',
+          content: response.message
+        })
+      }
+    }
+  }
 
   useEffect(() => {
     handelGetRecordTable()
@@ -84,14 +79,14 @@ export default function Records() {
 
   return (
     <div className="mt-10">
-      {/* <RecordModal
+      {showModal && <RecordModal
         isShow={showModal}
         modalType={modalType}
         onCancel={() => setShowModal(false)}
         onConfirm={handelSubmitRecord}
         data={modalData}
-      /> */}
-      {/* {content} */}
+      />}
+      {content}
       {user ?
         <>
           <div className='text-end mb-5'>
