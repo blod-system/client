@@ -82,13 +82,14 @@ export default function Header() {
 			gender: value.gender,
 			is_reminder_active: value.isReminderActive,
 		}
-		console.log(params)
+
 		const updateRes = await updateUserInfo(params)
 		if (updateRes?.status === 200) {
 			messageBox.open({
 				type: 'success',
 				content: updateRes.message,
 			});
+			await user.getUserInfo()
 			callBack()
 		} else {
 			messageBox.open({
