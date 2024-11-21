@@ -31,7 +31,7 @@ export async function getApi<T>(params: GetApiParams): Promise<ApiResponse<T>> {
     return result
   }, null)
   const url = urlParam ? apiPath + urlParam : apiPath
-  console.log("url", url)
+  
   const response = await axiosInstance.get(url);
 
   return response.data;

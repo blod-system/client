@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { Modal, Button, Form, DatePicker, Upload, Input, UploadFile } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
@@ -15,7 +14,7 @@ type PropsType = {
 
 
 export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: PropsType) {
-  console.log(data)
+  console.log("data", data)
   const [form] = Form.useForm();
   const defaultFileList: UploadFile[] = [
     {
@@ -56,7 +55,6 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
             }
           } : undefined}
           form={form}
-          // onFinish={onConfirm}
           labelCol={{ span: 5 }}
         >
           <Form.Item<RecordData>
@@ -79,10 +77,9 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
           <Form.Item<RecordData>
             label='捐血報告'
             name='reportUrl'
-            valuePropName="file"
           >
             <Upload
-              action={`${import.meta.env.VITE_API_URL = "/api"}/upload`}
+              action={`${import.meta.env.VITE_API_URL}/upload`}
               listType="picture-card"
               maxCount={1}
               accept=".pdf"

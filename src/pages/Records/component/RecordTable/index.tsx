@@ -8,7 +8,6 @@ type PropsType = {
 }
 
 export function RecordTable({ dataSource, openEditModal }: PropsType) {
-  console.log(dataSource)
   const columns: TableColumnsType<RecordData> = [
     {
       title: '捐 血 日 期',
