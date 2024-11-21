@@ -77,6 +77,7 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
           <Form.Item<RecordData>
             label='捐血報告'
             name='reportUrl'
+            valuePropName="file"
           >
             <Upload
               action={`${import.meta.env.VITE_API_URL}/upload`}
