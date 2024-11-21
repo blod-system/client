@@ -55,8 +55,6 @@ export default function Records() {
         report_url: value?.reportUrl?.file?.response?.data.url ?? null,
         ...(value.id && { id: value.id })
       }
-      console.log(params)
-      console.log("user", user)
       const response = modalType === 'create' ? await addRecord(params) : await updateRecord(params)
 
       if (response.status === 200) {
@@ -81,13 +79,13 @@ export default function Records() {
 
   return (
     <div className="mt-10">
-      <RecordModal
+      {showModal && <RecordModal
         isShow={showModal}
         modalType={modalType}
         onCancel={() => setShowModal(false)}
         onConfirm={handelSubmitRecord}
         data={modalData}
-      />
+      />}
       {content}
       {user ?
         <>
