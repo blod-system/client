@@ -72,11 +72,11 @@ export default function Location() {
 		};
 
 		placeService.textSearch(request, (responseData) => {
-			if (!responseData || responseData.length === 0) return null;
+			if (!!responseData?.length) return null;
 			const newMarkers: Marker[] = [];
 			const bounds = new google.maps.LatLngBounds();
-			responseData.forEach((place) => {
-				if (!place.geometry || !place.geometry.location) return;
+			responseData!.forEach((place) => {
+				if (!place?.geometry?.location) return;
 				newMarkers.push({
 					position: place.geometry.location,
 					title: place.name || '',

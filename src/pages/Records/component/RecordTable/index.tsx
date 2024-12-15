@@ -3,7 +3,7 @@ import type { TableColumnsType } from "antd"
 import type { RecordData } from '../../types'
 
 type PropsType = {
-  dataSource: RecordData[] | null;
+  dataSource: RecordData[] | [];
   openEditModal: (value: RecordData) => void;
 }
 
@@ -25,7 +25,7 @@ export function RecordTable({ dataSource, openEditModal }: PropsType) {
       render: (reportUrl) => (
         reportUrl ? <a href={reportUrl} className="text-blue-500 hover:text-red-500" target="_blank" rel="noopener noreferrer">
           PDF
-        </a> : <></>
+        </a> : null
       )
     },
     {
@@ -59,7 +59,7 @@ export function RecordTable({ dataSource, openEditModal }: PropsType) {
       <Table
         className="bg-gray-500"
         columns={columns}
-        dataSource={dataSource || []}
+        dataSource={dataSource}
         bordered
         pagination={false}
         scroll={{ y: 100 * 5 }}

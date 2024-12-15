@@ -11,7 +11,7 @@ export default function Records() {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [modalType, setModalType] = useState<'create' | 'edit'>('create')
   const [modalData, setModalData] = useState<RecordData | null>(null);
-  const [dataSource, setDataSource] = useState<RecordData[] | null>(null)
+  const [dataSource, setDataSource] = useState<RecordData[] | []>([])
   const [messageBox, content] = message.useMessage()
   const user = useUserStore(i => i.userInfo);
 

@@ -14,7 +14,7 @@ type PropsType = {
 
 
 export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: PropsType) {
-  console.log("data", data)
+
   const [form] = Form.useForm();
   const defaultFileList: UploadFile[] = [
     {
@@ -48,12 +48,14 @@ export function RecordModal({ isShow, modalType, data, onCancel, onConfirm }: Pr
       </p>
       <div className='px-4'>
         <Form
-          {...data ? {
-            initialValues: {
-              ...data,
-              date: dayjs(data?.date)
-            }
-          } : undefined}
+          {...data ?
+            {
+              initialValues: {
+                ...data,
+                date: dayjs(data?.date)
+              }
+            } : undefined
+          }
           form={form}
           labelCol={{ span: 5 }}
         >
